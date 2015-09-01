@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 public class LaunchableActivity implements Comparable<LaunchableActivity> {
     private final ActivityInfo activityInfo;
@@ -88,6 +89,7 @@ public class LaunchableActivity implements Comparable<LaunchableActivity> {
                 final ActivityManager activityManager =
                         (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
                 final int iconDpi = activityManager.getLauncherLargeIconDensity();
+                Log.d("iconDPI",String.valueOf(iconDpi));
                 try {
                     _activityIcon = pm.getResourcesForActivity(componentName).getDrawableForDensity(
                             activityInfo.getIconResource(), iconDpi);
@@ -111,7 +113,7 @@ public class LaunchableActivity implements Comparable<LaunchableActivity> {
                         _activityIcon.getIntrinsicWidth() > iconSizePixels) {
                     _activityIcon = new BitmapDrawable(
                             Bitmap.createScaledBitmap(((BitmapDrawable) _activityIcon).getBitmap()
-                                    , iconSizePixels, iconSizePixels, false));
+                                    , iconSizePixels, iconSizePixels, true));
                 }
             }
             activityIcon = _activityIcon;
